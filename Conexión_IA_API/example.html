@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subida de Archivos - CBTIS</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #ddc9a3;
+    }
+
+    header {
+        background-color: #98989a; 
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    .logo{
+        max-width: 100px;
+
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(37, 37, 37, 0.1);
+    }
+
+    h2 {
+        color: #a7201f;
+    }
+
+    .info {
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .upload-box {
+        border: 2px dashed #a7201f;
+        padding: 30px;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #faf5ff;
+    }
+
+    input[type="file"] {
+        margin-top: 15px;
+    }
+
+    button {
+        margin-top: 20px;
+        background-color: #a7201f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #a7201f;
+    }
+
+    footer {
+        text-align: center;
+        padding: 15px;
+        background-color: #a7201f;
+        margin-top: 40px;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <img src="image-removebg-preview (8).png" alt="" class="logo">
+    <h1></h1>
+</header>
+
+<div class="container">
+    <h2>Sube tus archivos</h2>
+    
+    <div class="info">
+        <p>Sube tus archivos de manera segura para que nuestra IA los analice y te ayudemos con tu plan de estudio</p>
+        <ul>
+            <li>Formatos permitidos: PDF, DOCX, JPG, PNG, MP4</li>
+            <li>Tamaño máximo: 10MB</li>
+            <li>Comprueba que estes subiendo el archivo correcto</li>
+        </ul>
+    </div>
+
+    <div class="upload-box">
+        <p>Selecciona tu archivo</p>
+        <input type="file" id="fileInput">
+        <br>
+        <button onclick="subirArchivo()">Subir Archivo</button>
+        <p id="status"></p>
+    </div>
+</div>
+
+<footer>
+    <p>DYEIP</p>
+</footer>
+
+<script>
+function subirArchivo() {
+    const fileInput = document.getElementById('fileInput');
+    const status = document.getElementById('status');
+
+    if (fileInput.files.length === 0) {
+        status.textContent = 'Por favor selecciona un archivo.';
+        status.style.color = 'red';
+        return;
+    }
+
+    const file = fileInput.files[0];
+
+    if (file.size > 10 * 1024 * 1024) {
+        status.textContent = 'El archivo excede el tamaño máximo de 10MB.';
+        status.style.color = 'red';
+        return;
+    }
+
+    status.textContent = 'Archivo listo ';
+    status.style.color = 'green';
+}
+</script>
+
+</body>
+</html>

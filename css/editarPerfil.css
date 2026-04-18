@@ -148,3 +148,67 @@ button[type="submit"]:hover {
     90% { opacity: 1; }
     100% { opacity: 0; transform: translateY(-10px); display: none; }
 }
+
+/* Estilos para la sección de habilidades */
+.habilidades-section {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.habilidad-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.habilidad-input .input-container {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.eliminar-habilidad {
+    background: #ff4757;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.eliminar-habilidad:hover {
+    background: #ff3742;
+}
+
+.agregar-habilidad-btn {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.agregar-habilidad-btn:hover {
+    background: #357abd;
+}
+
+.habilidad-input select {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+}
+

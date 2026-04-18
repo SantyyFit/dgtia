@@ -1,14 +1,17 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include_once 'includes/dbconexion.php';
 
 $usuario = $_POST["usuario"];
 $password = $_POST["password"];
 
 $query = "SELECT * FROM usuarios WHERE usuario='$usuario' AND password='$password'";
-$resultado = mysql_query($query, $conexion);
+$resultado = mysqli_query($conexion, $query);
 
-if (mysql_num_rows($resultado) > 0) {
-    $datos = mysql_fetch_array($resultado);
+if (mysqli_num_rows($resultado) > 0) {
+    $datos = mysqli_fetch_array($resultado);
     $idUsuario = $datos["idusuario"];
 
     session_start();

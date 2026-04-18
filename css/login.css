@@ -1,0 +1,151 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --rojo-principal: #a7201f;
+  --rojo-secundario: #9f2241;
+  --vino: #691c32;
+  --dorado-claro: #ddc9a3;
+  --dorado-oscuro: #bc955c;
+  --gris-claro: #98989a;
+  --gris-oscuro: #6f7271;
+  --blanco: #ffffff;
+
+  --fondo: #121212;
+  --card: #1e1e2f;
+  --input: #2a2a3d;
+}
+body {
+  background: var(--fondo);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--blanco);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+div:first-of-type {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+div:first-of-type > div:first-child {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--dorado-claro);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+img {
+  width: 150px;
+  height: auto;
+}
+form {
+  background: var(--card);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(167, 32, 31, 0.3);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid rgba(221, 201, 163, 0.2);
+}
+
+input[type='text'],
+input[type='password'] {
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  background: var(--input);
+  color: var(--blanco);
+}
+
+input::placeholder {
+  color: var(--gris-claro);
+}
+
+input[type='submit'] {
+  background: linear-gradient(90deg, var(--rojo-principal), var(--vino));
+  color: var(--blanco);
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+input[type='submit']:hover {
+  background: linear-gradient(90deg, var(--rojo-secundario), var(--vino));
+  transform: scale(1.03);
+}
+
+form > div:last-of-type {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+form a {
+  color: var(--dorado-claro);
+  text-decoration: none;
+}
+
+form a:hover {
+  text-decoration: underline;
+}
+
+form > div:has(+ div):last-child {
+  color: #ff6b6b;
+  text-align: center;
+  font-weight: bold;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  background: var(--input);
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(221, 201, 163, 0.2);
+}
+
+.input-container input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--blanco);
+  font-size: 1rem;
+  outline: none;
+  padding-left: 10px;
+}
+
+.input-icon {
+  color: var(--dorado-oscuro);
+  font-size: 1.2rem;
+}
+.input-error {
+  border: 2px solid #ff4d4d !important;
+}
+.error-msg {
+  background: rgba(167, 32, 31, 0.15);
+  color: #ff4d4d !important;
+  border: 1px solid #ff4d4d !important;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(167, 32, 31, 0.4);
+}

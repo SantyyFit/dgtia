@@ -1,0 +1,190 @@
+:root {
+    --bg-color: witte;
+    --text-color: #cbd5e1;
+    --primary-bg: #1e293b;
+    --secondary-bg: #0f172a;
+    --accent-color: white;
+    --button-color: #1e40af;
+    --input-bg: #0f172a;
+    --input-border: #334155;
+    --toggle-text: #3b82f6;
+    --heading-color: #e0e7ff;
+}
+
+body.claro {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --primary-bg: #ffffff;
+    --secondary-bg: #f1f3f5;
+    --accent-color: #007bff;
+    --button-color: #0d6efd;
+    --input-bg: #ffffff;
+    --input-border: #ced4da;
+    --toggle-text: #007bff;
+    --heading-color: #1e293b;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+#miRepositorio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px;
+}
+
+#miRepositorio h1 {
+    color: var(--heading-color);
+    margin-bottom: 20px;
+}
+
+#miRepositorio button {
+    background-color: #691c32;
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    margin: 5px 10px 20px 0;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    
+}
+
+#miRepositorio button:hover {
+    background-color: var(--accent-color);
+}
+
+#miRepositorio .toggle-btn {
+    background-color: transparent;
+    border: 2px solid var(--vino);
+    /* color: var(--toggle-text); */
+    padding: 8px 18px;
+    margin: 0 10px 30px 0;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#miRepositorio .toggle-btn:hover,
+#miRepositorio .toggle-btn.active {
+    background-color: var(--vino);
+    color: white;
+    border-color: var(--vino);
+}
+
+#miRepositorio .form-crear {
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    background: var(--primary-bg);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    margin-bottom: 40px;
+}
+
+#miRepositorio .form-crear.active {
+    display: block;
+}
+
+#miRepositorio label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+#miRepositorio input[type="text"],
+#miRepositorio select,
+#miRepositorio textarea,
+#miRepositorio input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--input-border);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#miRepositorio input[type="text"]:focus,
+#miRepositorio select:focus,
+#miRepositorio textarea:focus,
+#miRepositorio input[type="file"]:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+#miRepositorio textarea {
+    resize: vertical;
+}
+
+#miRepositorio hr {
+    border: 0;
+    border-top: 1px solid var(--input-border);
+    margin: 40px 0;
+    width: 100%;
+    max-width: 600px;
+}
+
+.clases-lista {
+    width: 100%;
+    max-width: 600px;
+    display: none;
+    background: darkgoldenrod;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+    margin-bottom: 40px;
+}
+
+.clases-lista.activo {
+    display: block;
+    /* color: aqua; */
+}
+
+.clases-lista h2 {
+    margin-top: 0;
+    color: var(--accent-color);
+}
+
+.clases-lista ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.clases-lista ul li {
+    padding: 12px 10px;
+    margin-bottom: 8px;
+    background: var(--secondary-bg);
+    border-radius: 6px;
+    border-left: 4px solid var(--accent-color);
+    transition: background-color 0.2s ease;
+}
+
+.clases-lista ul li:hover {
+    background: var(--input-border);
+}
+
+@media (max-width: 650px) {
+    #miRepositorio button,
+    #miRepositorio .toggle-btn {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    #miRepositorio .form-crear,
+    .clases-lista {
+        max-width: 100%;
+        padding: 15px;
+    }
+}

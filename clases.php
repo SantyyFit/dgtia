@@ -39,29 +39,32 @@ if ($f = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="imagenes/logons50.png">
+    <link rel="icon" href="imagenes/logo.png">
     <title>Usuarios</title>
-    <link rel="stylesheet" href="css/usuariosChat.css">
+    <link rel="stylesheet" href="css/usuariosChatt.css">
 </head>
+
 <body class="usuarios-body">
     <header class="usuarios-header">
         <h2>Usuarios disponibles</h2>
     </header>
-<div class="usuarios-container">
-    <?php foreach ($usuarios as $u): ?>
-        <div class="usuario">
-            <a href="chat.php?id=<?= htmlspecialchars($u['idusuario']) ?>&user=<?= urlencode($_GET['user']) ?>&UsuarioB=<?= urlencode($u['nombre']) ?>&idUsuarioB=<?= $u['idusuario'] ?>&i=<?= urlencode($_GET['i']) ?>">
+    <div class="usuarios-container">
+        <?php foreach ($usuarios as $u): ?>
+            <div class="usuario">
+                <a href="chat.php?id=<?= htmlspecialchars($u['idusuario']) ?>&user=<?= urlencode($_GET['user']) ?>&UsuarioB=<?= urlencode($u['nombre']) ?>&idUsuarioB=<?= $u['idusuario'] ?>&i=<?= urlencode($_GET['i']) ?>">
 
-                <img src="<?= htmlspecialchars($u['img_perfil']) ?>" alt="Foto de <?= htmlspecialchars($u['nombre']) ?>" class="foto-perfil">
-                <?= htmlspecialchars($u['nombre']) ?>
-            </a>
-        </div>
-    <?php endforeach; ?>
-</div>
+                    <img src="<?= htmlspecialchars($u['img_perfil']) ?>" alt="Foto de <?= htmlspecialchars($u['nombre']) ?>" class="foto-perfil">
+                    <?= htmlspecialchars($u['nombre']) ?>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
 
 </body>
 <?php include_once 'includes/header.php'; ?>
+
 </html>

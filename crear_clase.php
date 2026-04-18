@@ -10,6 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 include_once 'includes/PDOdb.php';
+include_once 'includes/insignias_helper.php';
 
 // Verificar si el usuario está logueado
 if (!isset($_SESSION['idusuario'])) {
@@ -26,6 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_clase'])) {
     $titulo = $_POST['titulo'];
     $descripcion = $_POST['descripcion'];
     $visibilidad = $_POST['visibilidad'];
+
+    // Obtener conexión PDO
+    $pdo = Conectarse();
 
     // 1. Insertar clase
     $stmt = $pdo->prepare("
@@ -73,14 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['crear_clase'])) {
     ");
     $stmt->execute([$id_usuario, $id_clase]);
 
-    // 4. Redirigir de vuelta al repositorio
- echo "<script>
-    alert('Clase creada correctamente.');
-    window.history.back();
-</script>";
-exit();
-exit;
+    // 4. Asignar insignias por crear clase
+    asignarInsignia($pdo, $id_usuario, 'compartidas');
 
-
+    // 5. Redirigir de vuelta al repositorio
+    echo "<script>
+        alert('Clase creada correctamente.');
+        window.history.back();
+    </script>";
+    exit();
 }
 ?>

@@ -1,9 +1,9 @@
 <?php
 function Conectarse() {
     $host = "localhost";
-    $usuario = "newskillcom_santy";
-    $contrasena = "Diciembre1224#*";
-    $bd = "newskillcom_newskill";
+    $usuario = "cruzzsan_usuario";
+    $contrasena = "NuevaContraseñaSegura";
+    $bd = "cruzzsan_dgtia";
 
     $conexion = new mysqli($host, $usuario, $contrasena, $bd);
 

@@ -1,10 +1,21 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include_once 'includes/PDOdb.php';
 include_once 'includes/session.php';
 include_once 'includes/head.php';
 
 $UsuarioBuscado = $_GET['UsuarioB'];
 $idUsuarioB = $_GET['idUsuarioB'];
+
+// Verificar si es el propio perfil
+$yo = $_SESSION['idusuario'];
+if ($yo == $idUsuarioB) {
+    header("Location: perfil.php?user=" . urlencode($_GET['user']) . "&i=" . urlencode($_GET['i']));
+    exit();
+}
 
 // Preparar y ejecutar consulta para buscar usuario
 $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE idusuario = ?");
@@ -71,9 +82,6 @@ $insignias = $insigniasStmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="datos-perfil_contenedor">
                 <p><a href="verSeguidores.php?id=<?= $idUsuarioB ?>&user=<?=$_GET['user']?>&i=<?=$_GET ['i']?>" class="link-seguidores" style="text-decoration:none">Seguidores <?= $seguidores_count ?></a></p>
-                <p>Publicaciones 0</p>
-                <p>Habilidades 3</p>
-                <p>Cursos 2</p>
             </div>
             <div class="descripcion">
                 <p style="color: black;">
@@ -98,20 +106,44 @@ $insignias = $insigniasStmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="habilidades-contenedor">
-                <p>HABILIDADES</p>
-
-                <div class="habilidad-card" style="background-image: url('imagenes/Guitarra.png');">
-                    <p>Guitarra: Avanzado</p>
+                       <div class="habilidades-contenedor" style="text-align: center; margin: 20px 0; padding: 15px;">
+                <p style="font-size: 18px; font-weight: bold; color: white; margin-bottom: 15px; text-transform: uppercase;">HABILIDADES</p>
+                <?php
+                // Obtener habilidades del usuario
+                $habilidadesStmt = $pdo->prepare("SELECT nombre, nivel FROM habilidades WHERE id_usuario = ?");
+                $habilidadesStmt->execute([$idUsuarioB]);
+                $habilidades = $habilidadesStmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                if ($habilidades): 
+                    $color_index = 0;
+                    foreach ($habilidades as $habilidad): 
+                        // Colores alternados
+                        $colors = [
+                            'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);',
+                            'background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);',
+                            'background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);',
+                            'background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);',
+                            'background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);',
+                            'background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);'
+                        ];
+                        $current_color = $colors[$color_index % count($colors)];
+                        $color_index++;
+                ?>
+                <div style="<?= $current_color ?> border-radius: 12px; padding: 15px; margin: 10px; min-width: 150px; display: inline-block; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1);" 
+                     onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 8px 25px rgba(0, 0, 0, 0.3)';" 
+                     onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.2)';">
+                    <p style="font-size: 16px; font-weight: bold; color: white; margin: 0 0 5px 0; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);"><?= htmlspecialchars($habilidad['nombre']) ?></p>
+                    <p style="font-size: 12px; color: #e0e0e0; margin: 0; font-style: italic;">Nivel: <?= htmlspecialchars($habilidad['nivel']) ?></p>
                 </div>
-
-                <div class="habilidad-card" style="background-image: url('imagenes/programacion.png');">
-                    <p>Programación: Intermedio</p>
+                <?php 
+                    endforeach;
+                else: 
+                ?>
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 15px; margin: 10px; min-width: 150px; display: inline-block; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <p style="font-size: 16px; font-weight: bold; color: white; margin: 0 0 5px 0; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">No hay habilidades registradas</p>
+                    <p style="font-size: 12px; color: #e0e0e0; margin: 0; font-style: italic;"></p>
                 </div>
-
-                <div class="habilidad-card" style="background-image: url('imagenes/matematicas.png');">
-                    <p>Matemáticas: Amateur</p>
-                </div>
+                <?php endif; ?>
             </div>
 
             <h3 style="color:white; margin-bottom: 10px;">Insignias</h3>
@@ -156,17 +188,17 @@ $insignias = $insigniasStmt->fetchAll(PDO::FETCH_ASSOC);
 <!-- Modal para todas las insignias -->
 <div id="modalInsignias" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; 
      background: rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000;">
-  <div style="background:#fff; padding:20px; border-radius:10px; max-width:90vw; max-height:80vh; overflow:auto;">
+  <div style="background:#1e1e2f; padding:20px; border-radius:10px; max-width:90vw; max-height:80vh; overflow:auto;">
 
     <h2 style="text-align:center; margin-bottom:20px;">Todas las Insignias</h2>
     <div style="display:flex; flex-wrap: nowrap; overflow-x: auto; gap:15px;">
 
       <?php foreach ($insignias as $insignia): ?>
-        <div style="text-align:center; flex: 0 0 auto; border: 1px solid black; border-radius: 10%; justify-content:center;" >
+        <div style="text-align:center; flex: 0 0 auto;  border-radius: 10%; justify-content:center;" >
           <img 
             src="<?= htmlspecialchars($insignia['imagen']) ?>" 
             alt="<?= htmlspecialchars($insignia['nombre']) ?>" 
-            style="width:100px; height:100px; object-fit:contain; background:white; border-radius:8px;"
+            style="width:100px; height:100px; object-fit:contain; background:white; border-radius:8px; box-shadow: 4px 4px 4px #dacb6a; cursor:pointer; margin-right:10px;"
           >
         </div>
       <?php endforeach; ?>
@@ -182,13 +214,20 @@ $insignias = $insigniasStmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
 </div>
 
-            <div class="contenedor-recomendaciones">
-                <p>Críticas y recomendaciones</p>
-                <div class="critica-contenedor">
-                    <p>DyyBautista:</p>
-                    <p>Muy buenas explicaciones</p>
-                </div>
-            </div>
+           
+<div class="contenedor-recomendaciones">
+    <p>Críticas y recomendaciones</p>
+
+    <button id="btnAbrirComentario" class="btn-comentar-perfil">
+        Agregar comentario
+    </button>
+
+    <div id="comentariosPerfil"></div>
+</div>
+
+
+<div id="comentariosPerfil"></div> <!-- Aquí se cargan los comentarios -->
+
         </div>
     </main>
 
@@ -197,6 +236,81 @@ $insignias = $insigniasStmt->fetchAll(PDO::FETCH_ASSOC);
         <span class="cerrar-modal" onclick="cerrarModal(event)">&times;</span>
         <img class="modal-contenido" id="imgExpandidaPerfil">
     </div>
+
+    <!-- Modal para comentar -->
+<div id="modalComentario" class="modalComentario" style="
+    display:none; position:fixed; top:0; left:0; width:100vw; height:100vh;
+    background:rgba(0,0,0,0.7); justify-content:center; align-items:center;
+    z-index:2000;">
+    
+    <div style="background:#1e1e2f; padding:20px; border-radius:10px; width:90%; max-width:400px;">
+
+        <h3 style="text-align:center; color:white;">Agregar comentario</h3>
+
+        <form id="formComentarPerfil">
+            <textarea name="comentario" required placeholder="Escribe tu comentario..." 
+                style="width:100%; height:120px; border-radius:8px; padding:10px; resize:none;"></textarea>
+
+            <input type="hidden" name="id_perfil" value="<?= $idUsuarioB ?>">
+
+            <button type="submit" style="
+                margin-top:10px; width:100%; background:#4a90e2; color:#fff; padding:10px;
+                border:none; border-radius:6px; font-weight:bold; cursor:pointer;">
+                Publicar
+            </button>
+        </form>
+
+        <button id="cerrarComentario" style="
+            margin-top:10px; width:100%; background:#e24a4a; color:#fff; padding:10px;
+            border:none; border-radius:6px; font-weight:bold; cursor:pointer;">
+            Cancelar
+        </button>
+
+    </div>
+</div>
+
+<script>
+function cargarComentariosPerfil(){
+  fetch(`cargar_comentarios.php?id=<?= $idUsuarioB ?>&user=<?= $_GET['user'] ?>&i=<?= $_GET['i'] ?>`)
+    .then(res => res.text())
+    .then(html => {
+        document.getElementById("comentariosPerfil").innerHTML = html;
+    });
+}
+
+// Abrir modal
+document.getElementById("btnAbrirComentario").addEventListener("click", () => {
+    document.getElementById("modalComentario").style.display = "flex";
+});
+
+// Cerrar modal
+document.getElementById("cerrarComentario").addEventListener("click", () => {
+    document.getElementById("modalComentario").style.display = "none";
+});
+
+// Enviar comentario
+document.getElementById("formComentarPerfil").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let datos = new FormData(this);
+
+    fetch("guardar_comentario.php", {
+        method: "POST",
+        body: datos
+    })
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById("modalComentario").style.display = "none";
+        this.reset();
+        cargarComentariosPerfil();
+    });
+});
+
+// Cargar comentarios al abrir página
+cargarComentariosPerfil();
+</script>
+
+
 
     <script>
         function expandirImagen(src) {

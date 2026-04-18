@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'includes/dbconexion.php';
+include_once 'includes/PDOdb.php';
 
 header('Content-Type: application/json');
 
@@ -17,53 +17,58 @@ if ($id_usuario == $id_seguido) {
     exit();
 }
 
-function crearNotificacion($idusuario, $tipo, $mensaje, $url, $conexion) {
-    $idusuario = intval($idusuario);
-    $tipo = mysql_real_escape_string($tipo, $conexion);
-    $mensaje = mysql_real_escape_string($mensaje, $conexion);
-    $url = mysql_real_escape_string($url, $conexion);
+try {
+    // Obtener nombre usuario que hace follow para el mensaje
+    $stmt = $pdo->prepare("SELECT usuario FROM usuarios WHERE idusuario = ?");
+    $stmt->execute([$id_usuario]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $nombre_usuario = $user ? $user['usuario'] : 'Alguien';
 
-    $sql = "INSERT INTO notificaciones (idusuario, tipo, mensaje, url) 
-            VALUES ($idusuario, '$tipo', '$mensaje', '$url')";
-    mysql_query($sql, $conexion);
+    // Verificar si ya sigue
+    $check = $pdo->prepare("SELECT 1 FROM seguidores WHERE id_usuario = ? AND id_seguido = ?");
+    $check->execute([$id_usuario, $id_seguido]);
+
+    if ($check->rowCount() > 0) {
+        // Dejar de seguir
+        $stmt = $pdo->prepare("DELETE FROM seguidores WHERE id_usuario = ? AND id_seguido = ?");
+        $stmt->execute([$id_usuario, $id_seguido]);
+        $accion = 'seguir';
+
+        $mensaje = "$nombre_usuario ha dejado de seguirte.";
+        $url_notif = "verSeguidores.php?id=$id_seguido";
+        
+        // Crear notificación
+        $notif = $pdo->prepare("INSERT INTO notificaciones (idusuario, tipo, mensaje, url, visto) VALUES (?, ?, ?, ?, 0)");
+        $notif->execute([$id_seguido, "seguidores", $mensaje, $url_notif]);
+    } else {
+        // Seguir
+        $stmt = $pdo->prepare("INSERT INTO seguidores (id_usuario, id_seguido) VALUES (?, ?)");
+        $stmt->execute([$id_usuario, $id_seguido]);
+        $accion = 'siguiendo';
+
+        $mensaje = "$nombre_usuario ha comenzado a seguirte.";
+        $url_notif = "verSeguidores.php?id=$id_seguido";
+        
+        // Crear notificación
+        $notif = $pdo->prepare("INSERT INTO notificaciones (idusuario, tipo, mensaje, url, visto) VALUES (?, ?, ?, ?, 0)");
+        $notif->execute([$id_seguido, "seguidores", $mensaje, $url_notif]);
+    }
+
+    // Obtener contadores actualizados
+    $seg_stmt = $pdo->prepare("SELECT COUNT(*) as total FROM seguidores WHERE id_seguido = ?");
+    $seg_stmt->execute([$id_seguido]);
+    $seguidores_count = $seg_stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+    $seguidos_stmt = $pdo->prepare("SELECT COUNT(*) as total FROM seguidores WHERE id_usuario = ?");
+    $seguidos_stmt->execute([$id_usuario]);
+    $seguidos_count = $seguidos_stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+    echo json_encode([
+        'accion' => $accion,
+        'seguidores_count' => $seguidores_count,
+        'seguidos_count' => $seguidos_count,
+    ]);
+} catch (PDOException $e) {
+    echo json_encode(['error' => 'Error en la base de datos: ' . $e->getMessage()]);
 }
-
-// Obtener nombre usuario que hace follow para el mensaje
-$result = mysql_query("SELECT usuario FROM usuarios WHERE idusuario = $id_usuario", $conexion);
-$nombre_usuario = ($row = mysql_fetch_assoc($result)) ? $row['usuario'] : 'Alguien';
-
-// Verificar si ya sigue
-$check = mysql_query("SELECT * FROM seguidores WHERE id_usuario = $id_usuario AND id_seguido = $id_seguido", $conexion);
-
-if (mysql_num_rows($check) > 0) {
-    // Dejar de seguir
-    mysql_query("DELETE FROM seguidores WHERE id_usuario = $id_usuario AND id_seguido = $id_seguido", $conexion);
-    $accion = 'seguir';
-
-    $mensaje = "$nombre_usuario ha dejado de seguirte.";
-    $url_notif = "https://newskill.com.mx/verSeguidores.php?id=$id_seguido";
-    crearNotificacion($id_seguido, "seguidores", $mensaje, $url_notif, $conexion);
-
-} else {
-    // Seguir
-    mysql_query("INSERT INTO seguidores (id_usuario, id_seguido) VALUES ($id_usuario, $id_seguido)", $conexion);
-    $accion = 'siguiendo';
-
-    $mensaje = "$nombre_usuario ha comenzado a seguirte.";
-    $url_notif = "https://newskill.com.mx/verSeguidores.php?id=$id_seguido";
-    crearNotificacion($id_seguido, "seguidores", $mensaje, $url_notif, $conexion);
-}
-
-// Obtener contadores actualizados
-$seguidores = mysql_query("SELECT COUNT(*) as total FROM seguidores WHERE id_seguido = $id_seguido", $conexion);
-$seguidores_count = mysql_fetch_assoc($seguidores)['total'];
-
-$seguidos = mysql_query("SELECT COUNT(*) as total FROM seguidores WHERE id_usuario = $id_usuario", $conexion);
-$seguidos_count = mysql_fetch_assoc($seguidos)['total'];
-
-echo json_encode([
-    'accion' => $accion,
-    'seguidores_count' => $seguidores_count,
-    'seguidos_count' => $seguidos_count,
-]);
 ?>

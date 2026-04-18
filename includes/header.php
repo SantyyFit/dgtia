@@ -20,42 +20,42 @@ if (isset($_SESSION['idusuario'])) {
 }
 ?>
 
-<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/headerr.css">
 
 <header class="header">
     <div class="listacontainer">
         <ul class="header_nav-list">
             <li class="header_nav-item">
                 <a href="perfil.php?user=<?= $_GET["user"]; ?>&i=<?= $_GET["i"]; ?>"
-                   class="<?= basename($_SERVER['PHP_SELF']) == 'perfil.php' ? 'active' : '' ?>">
+                    class="<?= basename($_SERVER['PHP_SELF']) == 'perfil.php' ? 'active' : '' ?>">
                     <img src="imagenes/usuarioIcono4.png">
                 </a>
             </li>
 
             <li class="header_nav-item">
                 <a href="busqueda.php?user=<?= $_GET["user"]; ?>&i=<?= $_GET["i"]; ?>"
-                   class="<?= basename($_SERVER['PHP_SELF']) == 'busqueda.php' ? 'active' : '' ?>">
+                    class="<?= basename($_SERVER['PHP_SELF']) == 'busqueda.php' ? 'active' : '' ?>">
                     <img src="imagenes/busquedaIcono.png">
                 </a>
             </li>
 
             <li class="header_nav-item">
                 <a href="clases.php?user=<?= $_GET["user"]; ?>&i=<?= $_GET["i"]; ?>"
-                   class="<?= basename($_SERVER['PHP_SELF']) == 'clases.php' ? 'active' : '' ?>">
+                    class="<?= basename($_SERVER['PHP_SELF']) == 'clases.php' ? 'active' : '' ?>">
                     <img src="imagenes/relacionesIcono.png">
                 </a>
             </li>
 
             <li class="header_nav-item">
                 <a href="inicio.php?user=<?= $_GET["user"]; ?>&i=<?= $_GET["i"]; ?>"
-                   class="<?= basename($_SERVER['PHP_SELF']) == 'inicio.php' ? 'active' : '' ?>">
+                    class="<?= basename($_SERVER['PHP_SELF']) == 'inicio.php' ? 'active' : '' ?>">
                     <img src="imagenes/hogar.png">
                 </a>
             </li>
 
             <li class="header_nav-item" style="position: relative;">
                 <a href="ver_notificaciones.php?user=<?= $_GET["user"]; ?>&i=<?= $_GET["i"]; ?>"
-                   class="<?= basename($_SERVER['PHP_SELF']) == 'ver_notificaciones.php' ? 'active' : '' ?>">
+                    class="<?= basename($_SERVER['PHP_SELF']) == 'ver_notificaciones.php' ? 'active' : '' ?>">
                     <img src="imagenes/campana.png">
                     <?php if ($totalNotificaciones > 0): ?>
                         <span style="
@@ -74,7 +74,7 @@ if (isset($_SESSION['idusuario'])) {
 
             <li class="header_nav-item">
                 <a href="cursos.php?user=<?= $_GET["user"]; ?>&i=<?= $_GET["i"]; ?>"
-                   class="<?= basename($_SERVER['PHP_SELF']) == 'cursos.php' ? 'active' : '' ?>">
+                    class="<?= basename($_SERVER['PHP_SELF']) == 'cursos.php' ? 'active' : '' ?>">
                     <img src="imagenes/clasesIcono.png" alt="Cursos">
                 </a>
             </li>

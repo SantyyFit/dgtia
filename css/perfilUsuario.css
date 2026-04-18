@@ -331,3 +331,77 @@ body.body-perfil {
     from {opacity: 0;}
     to {opacity: 1;}
 }
+
+.btn-comentar-perfil {
+    width: 100%;
+    padding: 10px;
+    background: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.btn-comentar-perfil:hover {
+    background: #3c7bc7;
+}
+
+/* Contenedor general */
+#comentariosPerfil {
+    margin-top: 15px;
+}
+
+/* Card */
+.comentario-card {
+    background: #1f1f2e;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #2e2e40;
+    color: white;
+}
+
+/* Header */
+.comentario-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* Foto */
+.comentario-foto {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid #4a90e2;
+}
+
+/* Nombre */
+.comentario-autor {
+    font-weight: bold;
+    color: #4a90e2;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.comentario-autor:hover {
+    text-decoration: underline;
+}
+
+/* Fecha */
+.comentario-fecha {
+    color: #9ca3af;
+    font-size: 13px;
+    margin-top: -3px;
+}
+
+/* Texto */
+.comentario-texto {
+    margin-top: 5px;
+    font-size: 15px;
+    color: #e5e7eb;
+    line-height: 1.4;
+}

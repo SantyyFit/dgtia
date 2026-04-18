@@ -119,38 +119,68 @@ body.body-perfil {
     text-decoration: none;
 }
 
+/* Estilos para habilidades sin imágenes */
 .habilidades-contenedor {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    margin: 20px 0;
+    padding: 15px;
+    text-align: center;
 }
 
 .habilidades-contenedor > p {
-    font-size: 1.1rem;
+    font-size: 18px;
     font-weight: bold;
-    color: #00bcd4;
-    text-align: center;
+    color: white;
+    margin-bottom: 15px;
+    text-transform: uppercase;
 }
 
 .habilidad-card {
-    position: relative;
-    height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 12px;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
+    padding: 15px;
+    margin: 10px;
+    min-width: 150px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.habilidad-card p {
-    width: 100%;
-    margin: 0;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.6);
+.habilidad-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.habilidad-nombre {
+    font-size: 16px;
     font-weight: bold;
-    font-size: 0.95rem;
-    text-align: center;
+    color: white;
+    margin: 0 0 5px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.habilidad-nivel {
+    font-size: 12px;
+    color: #e0e0e0;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Colores alternativos para las tarjetas */
+.habilidad-card:nth-child(odd) {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.habilidad-card:nth-child(even) {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.habilidad-card:nth-child(3n) {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.habilidad-card:nth-child(4n) {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
 .insignias-contenedor {
@@ -227,3 +257,31 @@ body.body-perfil {
     from {opacity: 0;}
     to {opacity: 1;}
 }
+
+.contenedor-recomendaciones {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+.contenedor-recomendaciones > p {
+    color: #00bcd4;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.critica-contenedor {
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.critica-contenedor p:first-child {
+    color: #bbbbbb;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+

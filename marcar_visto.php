@@ -1,11 +1,6 @@
-<?php
-// Datos de conexión directa (evita includes conflictivos)
-try {
-    $pdo = new PDO("mysql:host=localhost;dbname=newskillcom_newskill;charset=utf8", "newskillcom_santy", "Diciembre1224#*");
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Error de conexión: " . $e->getMessage());
-}
+<?php // Datos de conexión directa (evita includes conflictivos)
+
+include_once 'includes/PDOdb.php';
 
 // Obtener ID de la notificación y URL de destino
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;

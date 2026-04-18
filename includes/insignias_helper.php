@@ -1,5 +1,10 @@
 <?php
 function asignarInsignia($pdo, $idUsuario, $tipo) {
+    if (!$pdo) {
+        error_log("Error: PDO no disponible en asignarInsignia");
+        return false;
+    }
+
     $metas = [
         'compartidas' => [
             1 => 1,
@@ -19,25 +24,45 @@ function asignarInsignia($pdo, $idUsuario, $tipo) {
         ]
     ];
 
-    // Elegimos el campo correcto según el tipo
-    $campo = ($tipo === 'compartidas') ? 'id_emisor' : 'id_receptor';
+    try {
+        if ($tipo === 'compartidas') {
+            // Contar clases creadas
+            $stmtCreadas = $pdo->prepare("SELECT COUNT(*) FROM clases WHERE id_creador = ?");
+            $stmtCreadas->execute([$idUsuario]);
+            $creardasCount = (int) $stmtCreadas->fetchColumn();
 
-    // Contamos las clases compartidas o recibidas desde la tabla clases_compartidas
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM clases_compartidas WHERE $campo = ?");
-    $stmt->execute([$idUsuario]);
-    $total = (int) $stmt->fetchColumn();
+            // Contar clases compartidas
+            $stmtCompartidas = $pdo->prepare("SELECT COUNT(*) FROM clases_compartidas WHERE id_emisor = ?");
+            $stmtCompartidas->execute([$idUsuario]);
+            $compartidassCount = (int) $stmtCompartidas->fetchColumn();
 
-    // Obtenemos las insignias que ya tiene el usuario
-    $insigniasActuales = $pdo->prepare("SELECT id_insignia FROM usuarios_insignias WHERE id_usuario = ?");
-    $insigniasActuales->execute([$idUsuario]);
-    $existentes = array_column($insigniasActuales->fetchAll(PDO::FETCH_ASSOC), 'id_insignia');
-
-    // Asignamos nuevas insignias si cumple con los requisitos
-    foreach ($metas[$tipo] as $idInsignia => $requerido) {
-        if ($total >= $requerido && !in_array($idInsignia, $existentes)) {
-            $insert = $pdo->prepare("INSERT INTO usuarios_insignias (id_usuario, id_insignia, fecha_obtenida) VALUES (?, ?, NOW())");
-            $insert->execute([$idUsuario, $idInsignia]);
+            $total = $creardasCount + $compartidassCount;
+            error_log("Usuario $idUsuario - Compartidas: Creadas=$creardasCount, Compartidas=$compartidassCount, Total=$total");
+        } else {
+            // Contar clases recibidas
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM clases_compartidas WHERE id_receptor = ?");
+            $stmt->execute([$idUsuario]);
+            $total = (int) $stmt->fetchColumn();
+            error_log("Usuario $idUsuario - Recibidas: Total=$total");
         }
+
+        // Obtenemos las insignias que ya tiene el usuario
+        $insigniasActuales = $pdo->prepare("SELECT id_insignia FROM usuarios_insignias WHERE id_usuario = ?");
+        $insigniasActuales->execute([$idUsuario]);
+        $existentes = array_column($insigniasActuales->fetchAll(PDO::FETCH_ASSOC), 'id_insignia');
+
+        // Asignamos nuevas insignias
+        foreach ($metas[$tipo] as $idInsignia => $requerido) {
+            if ($total >= $requerido && !in_array($idInsignia, $existentes)) {
+                $insert = $pdo->prepare("INSERT INTO usuarios_insignias (id_usuario, id_insignia, fecha_obtenida) VALUES (?, ?, NOW())");
+                $insert->execute([$idUsuario, $idInsignia]);
+                error_log("Insignia $idInsignia asignada a usuario $idUsuario (requerido: $requerido)");
+            }
+        }
+        return true;
+    } catch (PDOException $e) {
+        error_log("Error en asignarInsignia: " . $e->getMessage());
+        return false;
     }
 }
 ?>

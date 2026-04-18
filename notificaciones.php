@@ -3,8 +3,8 @@
 // NO require de PDO
 
 function crearNotificacion($idusuario, $tipo, $mensaje, $url, $pdo) {
-    $sql = "INSERT INTO notificaciones (idusuario, tipo, mensaje, url)
-            VALUES (:idusuario, :tipo, :mensaje, :url)";
+    $sql = "INSERT INTO notificaciones (idusuario, tipo, mensaje, url, visto)
+            VALUES (:idusuario, :tipo, :mensaje, :url, 0)";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         ':idusuario' => $idusuario,
