@@ -1,81 +1,58 @@
-<h1 align="center">🚀 NewSkill</h1>
+📚 DGTIA
+Plataforma escolar con apoyo de IA
+🚀 Descripción
 
-<p align="center">
-  <img src="https://img.shields.io/badge/estado-en%20desarrollo-yellow" alt="Estado del proyecto">
-  <img src="https://img.shields.io/github/license/TU_USUARIO/NewSkill" alt="Licencia">
-</p>
+DGTIA es una plataforma enfocada en el entorno escolar que permite gestionar clases, contenidos y evaluaciones, integrando herramientas de inteligencia artificial para mejorar el aprendizaje.
 
-<p align="center">
-  Plataforma para intercambiar conocimientos y habilidades entre personas, de forma gratuita y colaborativa.
-</p>
+El sistema está basado en la idea de intercambio y mejora de conocimiento, inspirado en el concepto de aprendizaje colaborativo.
 
----
+🎯 Objetivo
 
-<h2>🌟 ¿Qué es NewSkill?</h2>
+Facilitar el acceso a contenido educativo y mejorar la calidad del aprendizaje mediante:
 
-<p>
-  <strong>NewSkill</strong> es una red social educativa donde los usuarios pueden:
-</p>
+Gestión de clases
+Interacción entre usuarios
+Evaluación automática con IA
+Organización de contenido educativo
+🧠 Funcionalidades principales
+👤 Sistema de usuarios (registro e inicio de sesión)
+📖 Creación y gestión de clases
+💬 Interacción entre usuarios
+🤖 Evaluación de contenido con IA
+📂 Repositorio de materiales (texto, imágenes, etc.)
+🛠️ Tecnologías utilizadas
+Backend: PHP
+Base de datos: MySQL
+Frontend: HTML, CSS, JavaScript
+IA: API externa (OpenAI / similar)
+⚙️ Instalación
+Clona el repositorio:
+git clone https://github.com/tuusuario/dgtia.git
+Mueve el proyecto a tu servidor local (XAMPP, etc.)
+Configura la base de datos:
+Importa el archivo .sql
+Configura variables sensibles (API keys):
+Crear archivo .env (NO subirlo a GitHub)
+🔐 Seguridad
 
-<ul>
-  <li>📚 Compartir habilidades (como idiomas, música, programación, etc.)</li>
-  <li>👥 Tomar y dar clases entre usuarios</li>
-  <li>🏅 Ganar insignias, experiencia y reputación</li>
-  <li>🔔 Recibir notificaciones en tiempo real</li>
-</ul>
+⚠️ Este proyecto utiliza claves de API, por lo que:
 
----
+No se incluyen en el repositorio
+Se manejan mediante variables de entorno
+👥 Equipo
 
-<h2>🛠️ Estado actual del desarrollo</h2>
+Proyecto desarrollado para hackathon.
 
-<ul>
-  <li>✅ Sistema de notificaciones implementado</li>
-  <li>🔧 En desarrollo: sistema de control de clases</li>
-  <li>📄 Documentación técnica en proceso</li>
-</ul>
+Santy (Fullstack / Backend / Arquitectura)
+🚧 Estado del proyecto
 
----
+🔨 En desarrollo (Hackathon)
 
-<h2>👨‍💻 Equipo de desarrollo</h2>
+💡 Futuras mejoras
+Sistema de reputación
+Insignias y logros
+Clases en tiempo real
+Mejor integración con IA
+📄 Licencia
 
-<ul>
-  <li>Santy</li>
-  <li>Leo</li>
-  <li>Yair</li>
-  <li>Dylan</li>
-</ul>
-
----
-
-<h2>📷 Capturas de pantalla (próximamente)</h2>
-
-<p>
-  Próximamente se mostrarán capturas del sistema funcionando.
-</p>
-
----
-
-<h2>📦 Tecnologías utilizadas</h2>
-
-<ul>
-  <li>PHP 8</li>
-  <li>MySQL</li>
-  <li>JavaScript (AJAX)</li>
-  <li>HTML5 + CSS3</li>
-</ul>
-
----
-
-<h2>🤝 Contribuciones</h2>
-
-<p>
-  ¡Las contribuciones son bienvenidas! Puedes hacer un fork, trabajar en una rama y hacer un Pull Request.
-</p>
-
----
-
-<h2>📄 Licencia</h2>
-
-<p>
-  Este proyecto está bajo la licencia MIT. Consulta el archivo <code>LICENSE</code> para más detalles.
-</p>
+Uso educativo / prototipo
